@@ -1,26 +1,253 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-sans);
+  --font-heading: var(--font-bricolage);
   --font-mono: var(--font-geist-mono);
+  
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  
+  --radius-sm: calc(var(--radius) * 0.6);
+  --radius-md: calc(var(--radius) * 0.8);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) * 1.4);
+  --radius-2xl: calc(var(--radius) * 1.8);
+  --radius-3xl: calc(var(--radius) * 2.2);
+  --radius-4xl: calc(var(--radius) * 2.6);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  color-scheme: light;
+  
+  /* Portfolio Theme tokens */
+  --bg: #F3F5FB;
+  --ink: #15172B;
+  --mute: #6B7089;
+  
+  /* Shadcn light mode semantic mappings */
+  --background: #F3F5FB;
+  --foreground: #15172B;
+  --card: #FFFFFF;
+  --card-foreground: #15172B;
+  --popover: #FFFFFF;
+  --popover-foreground: #15172B;
+  --primary: #15172B;
+  --primary-foreground: #FFFFFF;
+  --secondary: #EBEFF7;
+  --secondary-foreground: #15172B;
+  --muted: #E8ECF5;
+  --muted-foreground: #6B7089;
+  --accent: #E3E8F5;
+  --accent-foreground: #15172B;
+  --destructive: #EF4444;
+  --border: #DCE2EE;
+  --input: #DCE2EE;
+  --ring: #3D5AFE;
+  --radius: 0.85rem;
+  
+  --sidebar: #FFFFFF;
+  --sidebar-foreground: #15172B;
+  --sidebar-primary: #15172B;
+  --sidebar-primary-foreground: #FFFFFF;
+  --sidebar-accent: #E8ECF5;
+  --sidebar-accent-foreground: #15172B;
+  --sidebar-border: #DCE2EE;
+  --sidebar-ring: #3D5AFE;
+}
+
+/* Enforce light theme */
+html, body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, -apple-system, sans-serif;
+  color-scheme: light;
+}
+
+.font-display {
+  font-family: var(--font-bricolage), system-ui, sans-serif;
+}
+
+/* Lenis Recommended CSS */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}
+
+/* Signature Electric Blue Selection (High-contrast & readable on both dark & white surfaces) */
+::selection {
+  background-color: #000 !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+
+::-moz-selection {
+  background-color: #000 !important;
+  color: #FFFFFF !important;
+}
+
+*::selection {
+  background-color: #000 !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+
+*::-moz-selection {
+  background-color: #000 !important;
+  color: #FFFFFF !important;
+}
+
+/* On dark surfaces & navbar: luminous blue selection highlight with pure white text */
+header ::selection,
+nav ::selection,
+.dark-glass ::selection,
+[data-cursor-light] ::selection,
+.dark ::selection,
+[data-theme="dark"] ::selection {
+  background-color: #000 !important;
+  color: #FFFFFF !important;
+  -webkit-text-fill-color: #FFFFFF !important;
+}
+
+header ::-moz-selection,
+nav ::-moz-selection,
+.dark-glass ::-moz-selection,
+[data-cursor-light] ::-moz-selection,
+.dark ::-moz-selection,
+[data-theme="dark"] ::-moz-selection {
+  background-color: #000 !important;
+  color: #FFFFFF !important;
+}
+
+@layer base {
+  * {
+    @apply border-border;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Hero elements initial state before GSAP autoAlpha reveal (Zero FOUC) */
+.hero-headline-init,
+.hero-subtitle-init,
+.hero-cta-init {
+  visibility: hidden;
+  opacity: 0;
+}
+
+#crowd {
+  opacity: 0;
+}
+
+/* Apple Dynamic Island Spring Physics */
+.apple-spring {
+  transition-timing-function: cubic-bezier(0.34, 1.4, 0.64, 1);
+}
+
+.apple-spring-in-out {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Custom Modern Jet-Black Scrollbar */
+::-webkit-scrollbar {
+  width: 9px;
+  height: 9px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F3F5FB;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #15172B;
+  border-radius: 9999px;
+  border: 2.5px solid #F3F5FB;
+  transition: background-color 0.2s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3D5AFE;
+}
+
+::-webkit-scrollbar-corner {
+  background: #F3F5FB;
+}
+
+/* Firefox scrollbar */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: #15172B #F3F5FB;
+}
+
+/* Hide default OS cursor completely on desktop when custom cursor is active */
+@media (pointer: fine) {
+  html, body, *, *::before, *::after {
+    cursor: none !important;
+  }
+}
+
+/* Reduced motion accessibility override */
+@media (prefers-reduced-motion: reduce) {
+  .hero-headline-init,
+  .hero-subtitle-init,
+  .hero-cta-init,
+  #crowd {
+    visibility: visible !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+
+/* Marquee animation for mobile portfolio gallery */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-100% - var(--gap, 1rem)));
+  }
+}
+
+.animate-marquee {
+  animation: marquee var(--duration, 40s) linear infinite;
 }
